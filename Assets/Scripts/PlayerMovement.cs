@@ -1,4 +1,4 @@
-// lets make him move
+// shoot
 // using __ imports namespace
 // Namespaces are collection of classes, data types
 using System.Collections;
@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 25.0f;
     public float rotationSpeed = 90;
     public float force = 700f;
+
+    public GameObject cannon;
+    public GameObject bullet;
 
     Rigidbody rb;
     Transform t;
@@ -40,5 +43,13 @@ public class PlayerMovement : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Space))
             rb.AddForce(t.up * force);
+
+        // https://docs.unity3d.com/ScriptReference/Input.html
+        if (Input.GetButtonDown("Fire1")){
+            GameObject newBullet = GameObject.Instantiate(bullet, cannon.transform.position, cannon.transform.rotation) as GameObject;
+            newBullet.GetComponent<Rigidbody>().linearVelocity += Vector3.up * 2;
+            newBullet.GetComponent<Rigidbody>().AddForce(newBullet.transform.forward * 1500);
+        }
+
     }
 }
